@@ -17,7 +17,7 @@ namespace OpenWeatherMap_Exercise
 
             // TODO: Create a variable to store the URL (use String Interpolation for the {city_name} and {api_Key}  HINT: Make sure to use the "imperial" measurement endpoint
 
-            // TODO: Create a variable to store the response from your GET request to that URL from above  HINT: Don't forget to call .Result 
+            // TODO: Create a variable to store the response from your GET request to that   URL from above  HINT: Don't forget to call .Result 
 
             // TODO: Create a variable to store the formattedResponse after you JObject.Parse() the response from above
 
