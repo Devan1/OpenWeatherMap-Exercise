@@ -1,27 +1,44 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Net.Http;
+using Newtonsoft.Json.Linq;
 
-namespace OpenWeatherMap_Exercise
+namespace test
 {
     public class Program
     {
         static void Main(string[] args)
         {
-            // TODO: Create an instance of the HttpClient Class called client
+            var apiKey = "7374f086c60369318f990ac8e308bf26";
+            Console.WriteLine("What city would you like to check the weather?: ");
+            var city = Console.ReadLine();
+
+            var client = new HttpClient();
+            var weatherURL = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=imperial";
+            var weatherResponse = client.GetStringAsync(weatherURL).Result;
+            var weatherJson = JObject.Parse(weatherResponse).GetValue("main").ToString();
+            var currentWeather = JObject.Parse(weatherJson).GetValue("temp").ToString();
+            var feelsLike = JObject.Parse(weatherJson).GetValue("feels_like").ToString();
+            var tempMin = JObject.Parse(weatherJson).GetValue("temp_min").ToString();
+            var tempMax = JObject.Parse(weatherJson).GetValue("temp_max").ToString();
+            var humidity = JObject.Parse(weatherJson).GetValue("humidity").ToString();
 
 
-            // TODO: Ask for the users API Key and store that in a variable called "api_Key" 
+            foreach (var item in weatherJson)
+            {
+                Console.Write(item);
+            }
+            Console.WriteLine();
+            Console.WriteLine($"--------------------");
 
-            // TODO: Ask the user for their city name and store that in a variable called "city_name"
+            Console.WriteLine(currentWeather);
+            Console.WriteLine(feelsLike);
+            Console.WriteLine(tempMin);
+            Console.WriteLine(tempMax);
+            Console.WriteLine(humidity);
+            Console.WriteLine($"--------------------");
 
-            // TODO: Create a variable to store the URL (use String Interpolation for the {city_name} and {api_Key}  HINT: Make sure to use the "imperial" measurement endpoint
-
-            // TODO: Create a variable to store the response from your GET request to that   URL from above  HINT: Don't forget to call .Result 
-
-            // TODO: Create a variable to store the formattedResponse after you JObject.Parse() the response from above
-
-            // TODO: Write out the current temperature in degrees Fahrenheit
+            Console.WriteLine($"The weather in {city} is:\nCurrent Weather: {currentWeather}," +
+                $"\nFeels Like: {feelsLike}\nLow: {tempMin} degrees\nHigh: {tempMax} degrees\nHumidity: {humidity}%");
         }
     }
 }
